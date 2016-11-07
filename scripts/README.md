@@ -29,6 +29,12 @@
     ```sh
     http://localhost:5601
     ```
+    
+5. (Optional) If you want to reingest all the data:
+    ```sh
+    $ curl -XDELETE http://localhost:9200/brew?pretty
+    $ docker-compose up logstash -d
+    ```
 
 ### Todos
 

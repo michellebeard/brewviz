@@ -1,0 +1,140 @@
+{
+  "template" : "brew",
+  "order" : 1,
+  "settings" : {
+    "number_of_shards" : 1,
+    "number_of_replicas" : 0,
+    "index.refresh_interval" : "5s"
+  },
+  "mappings" : {
+    "_default_" : {
+      "_all" : {
+        "enabled" : false
+      }
+    },
+    "beer" : {
+      "properties" : {
+        "abv" : {
+          "type" : "float"
+        },
+        "createDate" : {
+          "type" : "date",
+          "format" : "yyyy-MM-dd HH:mm:ss"
+        },
+        "description" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },  
+        "foodPairings" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },  
+        "glass" : {
+          "type" : "object",
+          "properties": {
+            "name" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+            }
+          }
+        },  
+        "ibu" : {
+          "type" : "float"
+        },  
+        "ingredients" : {
+          "type" : "object",
+          "properties" : {
+            "hops" : {
+              "type" : "object"
+            },
+            "malt" : {
+              "type" : "object"
+            },
+            "yeast" : {
+              "type" : "object"
+            }
+          }
+        },
+        "isOrganic" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },  
+        "name" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "nameDisplay" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "originalGravity" : {
+          "type" : "float"
+        },  
+        "servingTemperature" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },  
+        "servingTemperatureDisplay" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },  
+        "style" : {
+          "type" : "object",
+          "properties" : {
+            "abvMax" : {
+              "type" : "float"
+            },
+            "abvMin" : {
+              "type" : "float"
+            },
+            "ogMax" : {
+              "type" : "float"
+            },
+            "ogMin" : {
+              "type" : "float"
+            },
+            "fgMax" : {
+              "type" : "float"
+            },
+            "fgMin" : {
+              "type" : "float"
+            },
+            "ibuMax" : {
+              "type" : "integer"
+            },
+            "ibuMin" : {
+              "type" : "integer"
+            },
+            "srmMax" : {
+              "type" : "integer"
+            },
+            "srmMin" : {
+              "type" : "integer"
+            },
+            "name" : {
+              "index" : "not_analyzed",
+              "type" : "string"
+            },
+            "shortName" : {
+              "index" : "not_analyzed",
+              "type" : "string"
+            },
+            "description" : {
+              "index" : "not_analyzed",
+              "type" : "string"
+            },  
+            "category" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "index" : "not_analyzed",
+                  "type": "string"
+                }
+              }
+            }          
+          }
+        }
+      }
+    }
+  }
+}

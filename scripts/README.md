@@ -21,8 +21,8 @@
     
 3. Build and run Docker containers
     ```sh
-    $ docker-compose up elasticsearch -d
-    $ docker-compose up kibana -d
+    $ docker-compose up -d elasticsearch 
+    $ docker-compose up -d kibana
     ```
     
 4. Verify the deployment by navigating to your server address in your preferred browser.
@@ -33,7 +33,7 @@
 5. (Optional) If you want to reingest all the data:
     ```sh
     $ curl -XDELETE http://localhost:9200/brew?pretty
-    $ docker-compose up logstash -d
+    $ docker-compose up -d logstash
     ```
 
 ### Todos

@@ -2,7 +2,7 @@ version: "2"
 services:
   # ELK Stack
   elasticsearch:
-    image: elasticsearch:5
+    build: ./docker/es
     container_name: brewviz-elastic
     ports:
       - 9200:9200
@@ -23,7 +23,7 @@ services:
     environment:
       LS_HEAP_SIZE: "2048m"
   kibana:
-    image: kibana:5
+    build: ./docker/kibana
     container_name: brewviz-kibana
     ports:
       - 5601:5601

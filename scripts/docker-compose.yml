@@ -2,30 +2,30 @@ version: "2"
 services:
   # ELK Stack
   elasticsearch:
-    build: ./docker/es
+    image: elasticsearch:5
     container_name: brewviz-elastic
     ports:
       - 9200:9200
-      # - 9300:9300
+      - 9300:9300
     volumes:
       - ./es/data:/usr/share/elasticsearch/data
       - ./es/logs:/usr/share/elasticsearch/logs
+      - ./docker/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   logstash:
-    restart: always
     build: ./docker/logstash
     container_name: brewviz-logstash
     volumes:
       - ./data:/var/log/brew
-    depends_on:
-      - elasticsearch
     links:
       - elasticsearch
+    environment:
+      LS_HEAP_SIZE: "2048m"
   kibana:
-    build: ./docker/kibana
+    image: kibana:5
     container_name: brewviz-kibana
     ports:
       - 5601:5601
-    depends_on:
-      - elasticsearch
     links:
       - elasticsearch

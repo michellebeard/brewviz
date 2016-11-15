@@ -21,20 +21,21 @@
           "type" : "date",
           "format" : "yyyy-MM-dd HH:mm:ss"
         },
+        "updateDate" : {
+          "type" : "date",
+          "format" : "yyyy-MM-dd HH:mm:ss"
+        },
         "description" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },  
         "foodPairings" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },  
         "glass" : {
           "type" : "object",
           "properties": {
             "name" : {
-            "index" : "not_analyzed",
-            "type" : "string"
+            "type" : "keyword"
             }
           }
         },  
@@ -56,27 +57,22 @@
           }
         },
         "isOrganic" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },  
         "name" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },
         "nameDisplay" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },
         "originalGravity" : {
           "type" : "float"
         },  
         "servingTemperature" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },  
         "servingTemperatureDisplay" : {
-          "index" : "not_analyzed",
-          "type" : "string"
+          "type" : "keyword"
         },  
         "style" : {
           "type" : "object",
@@ -112,23 +108,19 @@
               "type" : "integer"
             },
             "name" : {
-              "index" : "not_analyzed",
-              "type" : "string"
+              "type" : "keyword"
             },
             "shortName" : {
-              "index" : "not_analyzed",
-              "type" : "string"
+              "type" : "keyword"
             },
             "description" : {
-              "index" : "not_analyzed",
-              "type" : "string"
+              "type" : "keyword"
             },  
             "category" : {
               "type" : "object",
               "properties" : {
                 "name" : {
-                  "index" : "not_analyzed",
-                  "type": "string"
+                  "type" : "keyword"
                 }
               }
             }          

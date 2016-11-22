@@ -32,7 +32,7 @@ $(document).ready(function() {
         .outerRadius(function(d) {
             return radius / 3 * (d.depth + 1) - 1; });
 
-    d3.json("data/flare.json", function(error, root) {
+    d3.json("assets/data/flare.json", function(error, root) {
         if (error) throw error;
 
         // Compute the initial layout on the entire tree to sum sizes.

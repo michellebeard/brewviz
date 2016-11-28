@@ -25,13 +25,12 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                         styles: {
                             terms: {
                                 field: "style.name",
-                                // include: "([a-z]?[.][a-z]+)", // regex to pull out player names.
-                                size: 5 // limit to top 20 styles per cateogry. 
+                                size: 5 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
-                                        field: "name",
+                                        field: "nameDisplay",
                                         size: 5
                                     }
                                 }
@@ -68,7 +67,6 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             .nodes(root)
             .forEach(function(d) {
                 d.name = d.key;
-                d.sum = d.value;
             });
 
         var arc = d3.svg.arc()
@@ -116,7 +114,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
 
         function createChildNodes(dataObj) {
             var root = {};
-            root.key = "Data";
+            root.key = "";
             root.children = dataObj.aggregations.categories.buckets;
             root.children.forEach(function(d) { d.children = d.styles.buckets; });
             root.children.forEach(function(d) {

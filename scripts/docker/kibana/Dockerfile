@@ -7,6 +7,6 @@ COPY entrypoint.sh /tmp/entrypoint.sh
 RUN chmod +x /tmp/entrypoint.sh
 
 # Install XPack
-RUN kibana-plugin install x-pack
+# RUN kibana-plugin install x-pack
 
 CMD ["/tmp/entrypoint.sh"]

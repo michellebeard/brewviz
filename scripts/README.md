@@ -14,7 +14,8 @@
     ```
     
     This will take about 30 minutes to run, but you don't need to run
-    this if the data has already been ingested by Elasticsearch.
+    this if the data has already been ingested by Elasticsearch. I've
+    also included the raw data in the data/ directory.
     
 ### Docker Instructions
 
@@ -24,21 +25,27 @@
     ```sh
     $ pip install docker-compose
     ```
-    
-3. Build and run Docker containers
+
+3. Create es/data and es/logs directory in the same level as docker-compose
+    ```sh
+    $ mkdir -p es/data
+    $ mkdir -p es/logs
+    ```
+
+4. Build and run Docker containers
     ```sh
     $ docker-compose up -d elasticsearch 
     $ docker-compose up -d kibana
     ```
     
-4. Verify the deployment by navigating to your server address in your preferred browser.
+5. Verify the deployment by navigating to your server address in your preferred browser.
     ```sh
     http://localhost:5601
     ```
     
-5. (Optional) If you want to reingest all the data:
+6. (Optional) If you want to reingest all the data:
     ```sh
-    $ curl -XDELETE http://localhost:9200/brew?pretty
+    $ ./cleanup.sh
     $ docker-compose up -d logstash
     ```
 

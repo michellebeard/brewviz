@@ -14,6 +14,17 @@
     },
     "beer" : {
       "properties" : {
+        "available" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "type" : "keyword"
+            },
+            "description" : {
+              "type" : "keyword"
+            }
+          }
+        },
         "abv" : {
           "type" : "float"
         },
@@ -35,7 +46,7 @@
           "type" : "object",
           "properties": {
             "name" : {
-            "type" : "keyword"
+              "type" : "keyword"
             }
           }
         },  
@@ -46,7 +57,7 @@
           "type" : "object",
           "properties" : {
             "hops" : {
-              "type" : "object"
+              "type" : "object",
             },
             "malt" : {
               "type" : "object"
@@ -87,7 +98,7 @@
               "type" : "float"
             },
             "ogMin" : {
-              "type" : "float"
+              "type" : "float"  
             },
             "fgMax" : {
               "type" : "float"

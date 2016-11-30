@@ -17,20 +17,20 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             aggs: {
                 categories: {
                     terms: {
-                        field: "style.category.name",
+                        field: "style.category.name.keyword",
                         exclude: "", // exclude empty strings.
                         size: 5 // limit to top 5 categories (out of 17).
                     },
                     aggs: {
                         styles: {
                             terms: {
-                                field: "style.name",
+                                field: "style.name.keyword",
                                 size: 5 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
-                                        field: "nameDisplay",
+                                        field: "nameDisplay.keyword",
                                         size: 5
                                     }
                                 }

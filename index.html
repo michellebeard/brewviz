@@ -40,15 +40,29 @@
         <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
-                    <div class="four wide column">
+                    <div class="six wide column">
                         <h3 id="categories" class="ui header">Beer Categories and Styles</h3>
                         <p class="default">The beer community has used styles to group beers of similar color, fragrance, flavor, bitterness or origin for years. By knowing the style of a beer, you can know what to expect when you enjoy it.</p>
-                        <p class="default">Click on the interactive visualization to drill down to specific beer styles and example beers that fit into that category.</p>
+                        <p class="default">Double click on the interactive visualization to drill down to specific beer styles and example beers that fit into that category.</p>
                         <div id="content" class="ui relaxed list hidden">
                             <div class="item">
                                 <div class="content">
                                     <p id="title" class="header">Default Text</p>
                                     <div id="description">Default Description</div>
+                                     <table id="category" class="ui single line table hidden">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Statistics</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Beer Total</b></td>
+                                                <td class="total"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <table id="style" class="ui single line table hidden">
                                         <thead>
                                             <tr>
@@ -57,6 +71,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr>
+                                                <td><b>Beer Total</b></td>
+                                                <td class="total"></td>
+                                            </tr>
                                             <tr>
                                                 <td><b>ABV</b></td>
                                                 <td class="rangeabv"></td>
@@ -80,13 +98,22 @@
                                                 <td class="abv"></td>
                                             </tr>
                                             <tr>
+                                                <td><b>Glassware</b></td>
+                                                <td class="glass"></td>
+                                            </tr>
+                                            <tr>
                                                 <td><b>Organic</b></td>
                                                 <td class="organic"></td>
                                             </tr>
                                             <tr>
                                                 <td><b>Brewery</b></td>
-                                                <td class="brewery">SmuttyNose</td>
+                                                <td class="brewery"></td>
                                             </tr>
+                                             <tr>
+                                                <td><b>Location</b></td>
+                                                <td class="location"></td>
+                                            </tr>
+                                             
                                         </tbody>
                                     </table>
                                 </div>
@@ -94,7 +121,7 @@
                         </div>
                     </div>
                     <!-- Viz #1 -->
-                    <div id="circlePacking" class="twelve wide column"></div>
+                    <div id="circlePacking" class="ten wide column"></div>
                 </div>
             </div>
         </div>

@@ -25,16 +25,16 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                         styles: {
                             terms: {
                                 field: "style.name.keyword",
-                                size: 3 // limit to top 5 styles per cateogry. 
+                                size: 6 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
                                         field: "nameDisplay.keyword",
-                                        size: 3,
-                                        // order: {
-                                        //     _term: "desc"
-                                        // }
+                                        size: 6,
+                                        order: {
+                                            _term: "desc"
+                                        }
                                     }
                                 }
                             }
@@ -70,14 +70,23 @@ var categoryData = { 'style.category': ['name'], 'style': ['name', 'description'
 function draw(root) {
     var margin = { top: 400, right: 480, bottom: 500, left: 400 };
 
-    var width = margin.left + margin.right,
-        height = margin.top + margin.bottom;
+    // var width = margin.left + margin.right,
+    //     height = margin.top + margin.bottom;
 
-    diameter = width;
+    // diameter = width;
+
+    width2 = $("#circlePacking").offsetWidth;
+    height2 = $("#circlePacking").offsetHeight;
+
+    var rect = document.getElementById("circlePacking").getBoundingClientRect();
+    console.log(rect);
+    var width = rect.width;
+    var diameter = width;
+    console.log(width);
 
     var svg = d3.select("#circlePacking").append("svg")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", 900)
         .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
@@ -116,16 +125,28 @@ function draw(root) {
         .style("fill", function(d) {
             return d.children ? color(d.depth) : null;
         })
-        .on("click", function(d) {
+        .on("dblclick", function(d) {
             if (focus !== d & d.depth !== 3) {
                 zoom(d);
                 d3.event.stopPropagation();
             }
         })
-        .on("mouseover", function(d) {
+        .on("click", function(d) {
+            console.log(d);
             var key = d3.select(this).attr('id');
             var id = categoryId[d.depth];
-            lookup(id, key);
+
+            // Just need to filter the leaf nodes for search request
+            var gp = null;
+            var p = null;
+
+            if (d.height == 0) {
+                // Depth 3, leaf node
+                gp = d.parent.parent.data.key;
+                p = d.parent.data.key;
+            } 
+
+            lookup(id, key, gp, p);
         });
 
     var text = d3.select("g").selectAll("text")
@@ -145,7 +166,7 @@ function draw(root) {
     var node = d3.select("g").selectAll("circle,text");
 
     svg.style("background", color(-1))
-        .on("click", function() { zoom(root); });
+        .on("dblclick", function() { zoom(root); });
 
     zoomTo([root.x, root.y, root.r * 2 + margin]);
 
@@ -187,21 +208,37 @@ function draw(root) {
     }
 }
 
-function lookup(id, key) {
+function lookup(id, key, gp, p) {
+    var newid = id + ".keyword";
+
+    // Build filter query
+    var filter = []
+    if (gp !== null) {
+        if (gp !== "") {
+            filter1 = {"term" : {"style.category.name.keyword" : gp }};
+            filter.push(filter1);
+        }
+    }
+
+    if (p !== null) {
+        if (p !== "") {
+            filter2 = {"term" : {"style.name.keyword" : p }};
+            filter.push(filter2);
+        }
+    }
+
     var query = {
-        "size": 1,
-        "query": {
-            "bool": {
-                "must": [{
-                    "query_string": {
-                        "query": id + ':' + key,
-                        "analyze_wildcard": true
-                    }
-                }],
-                "must_not": []
+        'size' : 1,
+        'query' : {
+            'bool' : {
+                'must' : [
+                    { 'match' : { [newid] : key }}
+                ],
+                'filter' : filter
             }
         }
     };
+
     clearAll();
 
     if (key !== '') {
@@ -248,16 +285,36 @@ function buildCategory (res) {
   $("#content").show();
   $("#title").html(res.hits[0]._source.style.category.name);
   $("#description").html("");
+  $("#category .total").html(res.total);
+  $("#category").show();
 }
 
 function buildStyle(res) {
   $("#content").show();
   $("table").hide();
   $("#title").html(res.hits[0]._source.style.name);
-  $("#description").html(res.hits[0]._source.description);
+  $("#description").html(res.hits[0]._source.style.description);
+  $("#style .total").html(res.total);
 
-  var abv = res.hits[0]._source.style.abvMin + "% - " + res.hits[0]._source.style.abvMax + "%";
-  var ibu = res.hits[0]._source.style.ibuMin + " - " + res.hits[0]._source.style.ibuMax;
+  var abvMin = abvMax = "-1";
+  if (typeof res.hits[0]._source.style.abvMin !== 'undefined') {
+    abvMin = res.hits[0]._source.style.abvMin;
+  }
+  if (typeof res.hits[0]._source.style.abvMax !== 'undefined') {
+    abvMax = res.hits[0]._source.style.abvMax;
+  }
+  var abv =  abvMin + "% - " + abvMax + "%";
+
+  var ibuMin = "-1";
+  var ibuMax = "-1";
+  if (typeof res.hits[0]._source.style.ibuMin !== 'undefined') {
+    ibuMin = res.hits[0]._source.style.ibuMin;
+  }
+  if (typeof res.hits[0]._source.style.ibuMax !== 'undefined') {
+    ibuMax = res.hits[0]._source.style.ibuMax;
+  }
+  var ibu = ibuMin + " - " + ibuMax;
+
   $("#style .rangeabv").html(abv);
   $("#style .rangeibu").html(ibu);
   $("#style").show();
@@ -269,7 +326,26 @@ function buildBeer(res) {
   $("#title").html(res.hits[0]._source.nameDisplay);
   $("#description").html(res.hits[0]._source.description);
   $("#beer .organic").html(res.hits[0]._source.isOrganic);
-  $("#beer .abv").html(res.hits[0]._source.abv);
+  var abv = "Unknown";
+  if (typeof res.hits[0]._source.abv !== 'undefined') {
+        abv = res.hits[0]._source.abv;
+  }
+  $("#beer .abv").html(abv);
+
+  $("#beer .brewery").html('<a href="' + res.hits[0]._source.breweries[0].website + '">' + res.hits[0]._source.breweries[0].name + '</a>');
+  var glass = "Unknown";
+  if (typeof res.hits[0]._source.glass !== 'undefined') {
+    glass = res.hits[0]._source.glass.name;
+  }
+  $("#beer .glass").html(glass);
+  // Locality is not defined for International
+  var location = res.hits[0]._source.breweries[0].locations[0].region + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName;
+
+  if (res.hits[0]._source.breweries[0].locations[0].locality) {
+    location = res.hits[0]._source.breweries[0].locations[0].locality + ", " + location;
+  }
+
+  $("#beer .location").html(location);
   $("#beer").show();
 }
 

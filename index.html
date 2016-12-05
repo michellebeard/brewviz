@@ -8,19 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!-- Third Library JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
     <script src="assets/third_party/semantic/dist/semantic.min.js"></script>
     <script src="assets/third_party/require.js"></script>
-    <script>require(["assets/js/donut"], function () {})</script>
-    <script>require(["assets/js/glass"], function () {})</script>
-
+    <script>
+    require(["assets/js/circlePacking"], function() {})
+    </script>
+    <!-- <script>require(["assets/js/bilevel_partition"], function () {})</script> -->
+    <!-- <script>require(["assets/js/glass"], function () {})</script> -->
     <!-- Third Library CSS -->
     <link rel="stylesheet" type="text/css" href="assets/third_party/semantic/dist/semantic.min.css">
     <!-- BrewViz Assets -->
     <script type="text/javascript" src="assets/js/brewviz.js"></script>
-    <script type="text/javascript" src="assets/js/bilevel_partition.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/brewviz.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/circlePacking.css">
     <!-- Site Properties -->
     <title>BrewViz</title>
 </head>
@@ -32,32 +34,67 @@
             <div class="ui text container">
                 <h1 class="ui inverted header">BrewViz</h1>
                 <h2>A Pretentious Guide to Beer</h2>
-                <a href="#bilateral" class="ui huge primary button">Get Started <i class="right arrow icon"></i></a>
+                <a href="#circlePacking" class="ui huge primary button">Get Started <i class="right arrow icon"></i></a>
             </div>
         </div>
         <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
-                    <div class="six wide column">
-                        <h3 class="ui header">Beer Categories</h3>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-                    </div>
-                    <!-- Viz #Elastic -->
-                    <div id="donut" class="ten wide column">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui vertical stripe segment">
-            <div class="ui middle aligned stackable grid container">
-                <div class="row">
-                    <div class="six wide column">
-                        <h3 class="ui header">Beer Categories and Styles</h3>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                    <div class="four wide column">
+                        <h3 id="categories" class="ui header">Beer Categories and Styles</h3>
+                        <p class="default">The beer community has used styles to group beers of similar color, fragrance, flavor, bitterness or origin for years. By knowing the style of a beer, you can know what to expect when you enjoy it.</p>
+                        <p class="default">Click on the interactive visualization to drill down to specific beer styles and example beers that fit into that category.</p>
+                        <div id="content" class="ui relaxed list hidden">
+                            <div class="item">
+                                <div class="content">
+                                    <p id="title" class="header">Default Text</p>
+                                    <div id="description">Default Description</div>
+                                    <table id="style" class="ui single line table hidden">
+                                        <thead>
+                                            <tr>
+                                                <th>Style Characteristics</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b>ABV</b></td>
+                                                <td class="rangeabv"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>IBU</b></td>
+                                                <td class="rangeibu"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table id="beer" class="ui single line table hidden">
+                                        <tbody>
+                                         <thead>
+                                            <tr>
+                                                <th>Beer Characteristics</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                            <tr>
+                                                <td><b>ABV</b></td>
+                                                <td class="abv"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Organic</b></td>
+                                                <td class="organic"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Brewery</b></td>
+                                                <td class="brewery">SmuttyNose</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Viz #1 -->
-                    <div id="bilateral" class="ten wide column">
-                    </div>
+                    <div id="circlePacking" class="twelve wide column"></div>
                 </div>
             </div>
         </div>

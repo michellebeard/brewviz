@@ -57,7 +57,7 @@
           "type" : "object",
           "properties" : {
             "hops" : {
-              "type" : "object",
+              "type" : "object"
             },
             "malt" : {
               "type" : "object"

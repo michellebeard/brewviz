@@ -17,20 +17,20 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             aggs: {
                 categories: {
                     terms: {
-                        field: "style.category.name.keyword",
+                        field: "style.category.name",
                         exclude: "", // exclude empty strings.
                         size: 3 // limit to top 5 categories (out of 17).
                     },
                     aggs: {
                         styles: {
                             terms: {
-                                field: "style.name.keyword",
+                                field: "style.name",
                                 size: 6 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
-                                        field: "nameDisplay.keyword",
+                                        field: "nameDisplay",
                                         size: 6,
                                         order: {
                                             _term: "desc"
@@ -209,20 +209,19 @@ function draw(root) {
 }
 
 function lookup(id, key, gp, p) {
-    var newid = id + ".keyword";
 
     // Build filter query
     var filter = []
     if (gp !== null) {
         if (gp !== "") {
-            filter1 = {"term" : {"style.category.name.keyword" : gp }};
+            filter1 = {"term" : {"style.category.name" : gp }};
             filter.push(filter1);
         }
     }
 
     if (p !== null) {
         if (p !== "") {
-            filter2 = {"term" : {"style.name.keyword" : p }};
+            filter2 = {"term" : {"style.name" : p }};
             filter.push(filter2);
         }
     }
@@ -232,7 +231,7 @@ function lookup(id, key, gp, p) {
         'query' : {
             'bool' : {
                 'must' : [
-                    { 'match' : { [newid] : key }}
+                    { 'match' : { [id] : key }}
                 ],
                 'filter' : filter
             }

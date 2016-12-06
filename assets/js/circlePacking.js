@@ -338,10 +338,19 @@ function buildBeer(res) {
     glass = res.hits[0]._source.glass.name;
   }
   $("#beer .glass").html(glass);
-  // Locality is not defined for International
-  var location = res.hits[0]._source.breweries[0].locations[0].region + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName;
 
-  if (res.hits[0]._source.breweries[0].locations[0].locality) {
+  var location = "";
+
+  // Locality and region might not be defined 
+  if (typeof res.hits[0]._source.breweries[0].locations[0].region !== 'undefined') {
+    location = res.hits[0]._source.breweries[0].locations[0].region;
+  }
+  if (typeof res.hits[0]._source.breweries[0].locations[0].country.displayName !== 'undefined') {
+    location = location + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName
+  }
+  // var location = res.hits[0]._source.breweries[0].locations[0].region + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName;
+
+  if (typeof res.hits[0]._source.breweries[0].locations[0].locality !== 'undefined') {
     location = res.hits[0]._source.breweries[0].locations[0].locality + ", " + location;
   }
 

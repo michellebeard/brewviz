@@ -107,7 +107,6 @@ function draw(root) {
             return b.value - a.value;
         });
 
-    console.log(root);
     var focus = root,
         nodes = pack(root).descendants(),
         view;

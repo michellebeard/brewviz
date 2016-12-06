@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+
+    <style>
+        h1 {
+            padding-left: 10px;
+            margin-bottom: -30px;
+        }
+
+        .text {
+            padding-left: 10px;
+            font-size: 20px;
+        }
+
+        .button {
+            background-color: #0073ff; /* Blue */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .button2 {
+            background-color: #ff0073; /* Pink */
+        } 
+
+        .beersvg {
+        }
+    </style>
+
+    <h1></h1></br>
+
+    <p>
+        <text   id="sort" class="text">Sort by:</text>
+        <button id="bitter" class="button">Bitterness</button>
+        <button id="sweet" class="button button2">Sweetness</button>
+    </p>
+
+    <p>
+        <svg id="beer" class="beersvg">
+            <svg id="beer0"><use xlink:href="assets/img/beer.svg#beersvg"/></svg>
+            <svg id="beer1"><use xlink:href="assets/img/beer.svg#beersvg"/></svg>
+            <svg id="beer2"><use xlink:href="assets/img/beer.svg#beersvg"/></svg>
+            <svg id="beer3"><use xlink:href="assets/img/beer.svg#beersvg"/></svg>
+            <svg id="beer4"><use xlink:href="assets/img/beer.svg#beersvg"/></svg>
+        </svg>
+    </p>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script>
+        var dimensions = ["700", "400"];
+
+        var icon_size  = ["100", "140"];
+        var icon_ypos  = "-20";
+        var icon_xpos  = ["0", "100", "200", "300", "400"];
+        // var grad_color = ["grey", "yellow", "orange", "red", "brown"];
+        var grad_color = ["#ffcc00", "#ffb700", "#ffa100", "#ff8c00", "#ff7700"];
+
+        var title = d3.select("h1")
+                      .text("Flavor");
+
+        var beer = d3.select("#beer")
+                     .attr("width", dimensions[0])
+                     .attr("height", dimensions[1]);
+
+        var beer0 = d3.select("#beer0")
+                      .attr("x", icon_xpos[0])
+                      .attr("y", icon_ypos)
+                      .attr("width", icon_size[0])
+                      .attr("height", icon_size[1])
+                      .attr("fill", grad_color[0]);
+
+        var beer1 = d3.select("#beer1")
+                      .attr("x", icon_xpos[1])
+                      .attr("y", icon_ypos)
+                      .attr("width", icon_size[0])
+                      .attr("height", icon_size[1])
+                      .attr("fill", grad_color[1]);
+
+        var beer2 = d3.select("#beer2")
+                      .attr("x", icon_xpos[2])
+                      .attr("y", icon_ypos)
+                      .attr("width", icon_size[0])
+                      .attr("height", icon_size[1])
+                      .attr("fill", grad_color[2]);
+
+        var beer3 = d3.select("#beer3")
+                      .attr("x", icon_xpos[3])
+                      .attr("y", icon_ypos)
+                      .attr("width", icon_size[0])
+                      .attr("height", icon_size[1])
+                      .attr("fill", grad_color[3]);
+
+        var beer4 = d3.select("#beer4")
+                      .attr("x", icon_xpos[4])
+                      .attr("y", icon_ypos)
+                      .attr("width", icon_size[0])
+                      .attr("height", icon_size[1])
+                      .attr("fill", grad_color[4]);
+
+        d3.json("assets/data/beerdata.json", function(error, data) {
+            if (error) return console.warn(error);
+
+            var beerlabel0 = beer0.append("text")
+                 .text(data.beer[0].style)
+                 .attr("x", icon_size[0]/2)
+                 .attr("y", icon_size[1] - 5)
+                 .attr("text-anchor", "middle")
+                 .attr("fill", grad_color[0]);      
+
+            var beerlabel1 = beer1.append("text")
+                 .text(data.beer[1].style)
+                 .attr("x", icon_size[0]/2)
+                 .attr("y", icon_size[1] - 5)
+                 .attr("text-anchor", "middle")
+                 .attr("fill", grad_color[1]);
+
+            var beerlabel2 = beer2.append("text")
+                 .text(data.beer[2].style)
+                 .attr("x", icon_size[0]/2)
+                 .attr("y", icon_size[1] - 5)
+                 .attr("text-anchor", "middle")
+                 .attr("fill", grad_color[2]);
+
+            var beerlabel3 = beer3.append("text")
+                 .text(data.beer[3].style)
+                 .attr("x", icon_size[0]/2)
+                 .attr("y", icon_size[1] - 5)
+                 .attr("text-anchor", "middle")
+                 .attr("fill", grad_color[3]);
+
+            var beerlabel4 = beer4.append("text")
+                 .text(data.beer[4].style)
+                 .attr("x", icon_size[0]/2)
+                 .attr("y", icon_size[1] - 5)
+                 .attr("text-anchor", "middle")
+                 .attr("fill", grad_color[4]);
+
+            var reorderIcons = function () {
+                for (var i = 0; i < 5; i++) {
+                    if (beerlabel0.text() == data.beer[i].style) {
+                        beer0.transition()
+                             .duration(1000)
+                             .attr("x", icon_xpos[i]);
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (beerlabel1.text() == data.beer[i].style) {
+                        beer1.transition()
+                             .duration(1000)
+                             .attr("x", icon_xpos[i]);
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (beerlabel2.text() == data.beer[i].style) {
+                        beer2.transition()
+                             .duration(1000)
+                             .attr("x", icon_xpos[i]);
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (beerlabel3.text() == data.beer[i].style) {
+                        beer3.transition()
+                             .duration(1000)
+                             .attr("x", icon_xpos[i]);
+                    }
+                }
+
+                for (var i = 0; i < 5; i++) {
+                    if (beerlabel4.text() == data.beer[i].style) {
+                        beer4.transition()
+                             .duration(1000)
+                             .attr("x", icon_xpos[i]);
+                    }
+                }
+            };
+
+            d3.select("#bitter")
+              .on("click", function () {
+                    data.beer.sort(
+                        function (x, y) {
+                            return d3.ascending(x.flavor["bitterness"], 
+                                                y.flavor["bitterness"]);
+                        }
+                    );
+                    reorderIcons();
+              });
+
+            d3.select("#sweet")
+              .on("click", function () {
+                    data.beer.sort(
+                        function (x, y) {
+                            return d3.ascending(x.flavor["sweetness"], 
+                                                y.flavor["sweetness"]);
+                        }
+                    );
+                    reorderIcons();
+              });
+        });
+
+    </script>
+</html>

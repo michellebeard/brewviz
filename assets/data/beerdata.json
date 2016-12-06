@@ -1,0 +1,72 @@
+{
+  "beer": [
+    {
+      "id": 10000,
+      "name": "Beer#0",
+      "style": "IPA",
+      "flavor": {
+        "bitterness": "8.0",
+        "sweetness": "2.0"
+      },
+      "food_pairings": [
+        "meat",
+        "seafood",
+        "asian"
+      ]
+    },
+    {
+      "id": 11000,
+      "name": "Beer#1",
+      "style": "Lager",
+      "flavor": {
+        "bitterness": "4.0",
+        "sweetness": "4.0"
+      },
+      "food_pairings": [
+        "meat",
+        "asian",
+        "italian"
+      ]
+    },
+    {
+      "id": 11100,
+      "name": "Beer#2",
+      "style": "Stout",
+      "flavor": {
+        "bitterness": "6.0",
+        "sweetness": "4.0"
+      },
+      "food_pairings": [
+        "mexican",
+        "asian",
+        "indian"
+      ]
+    },
+    {
+      "id": 11110,
+      "name": "Beer#3",
+      "style": "Cider",
+      "flavor": {
+        "bitterness": "3.0",
+        "sweetness": "7.0"
+      },
+      "food_pairings": [
+        "dessert",
+        "italian"
+      ]
+    },
+    {
+      "id": 11111,
+      "name": "Beer#4",
+      "style": "Ale",
+      "flavor": {
+        "bitterness": "5.0",
+        "sweetness": "5.0"
+      },
+      "food_pairings": [
+        "vegetarian",
+        "mexican"
+      ]
+    }
+  ]
+}

@@ -16,7 +16,9 @@
     require(["assets/js/circlePacking"], function() {})
     </script>
     <!-- <script>require(["assets/js/bilevel_partition"], function () {})</script> -->
-    <!-- <script>require(["assets/js/glass"], function () {})</script> -->
+    <script>
+    require(["assets/js/flavor"], function() {})
+    </script>
     <!-- Third Library CSS -->
     <link rel="stylesheet" type="text/css" href="assets/third_party/semantic/dist/semantic.min.css">
     <!-- BrewViz Assets -->
@@ -49,7 +51,7 @@
                                 <div class="content">
                                     <p id="title" class="header">Default Text</p>
                                     <div id="description">Default Description</div>
-                                     <table id="category" class="ui single line table hidden">
+                                    <table id="category" class="ui single line table hidden">
                                         <thead>
                                             <tr>
                                                 <th>Category Statistics</th>
@@ -87,12 +89,12 @@
                                     </table>
                                     <table id="beer" class="ui single line table hidden">
                                         <tbody>
-                                         <thead>
-                                            <tr>
-                                                <th>Beer Characteristics</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
+                                            <thead>
+                                                <tr>
+                                                    <th>Beer Characteristics</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
                                             <tr>
                                                 <td><b>ABV</b></td>
                                                 <td class="abv"></td>
@@ -109,11 +111,10 @@
                                                 <td><b>Brewery</b></td>
                                                 <td class="brewery"></td>
                                             </tr>
-                                             <tr>
+                                            <tr>
                                                 <td><b>Location</b></td>
                                                 <td class="location"></td>
                                             </tr>
-                                             
                                         </tbody>
                                     </table>
                                 </div>
@@ -129,21 +130,51 @@
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
                     <!-- Viz #2 -->
-                    <div id="" class="ten wide column">
+                    <div id="flavor" class="ten wide column">
+                        <p>
+                            <svg id="beers" class="beersvg">
+                                <svg id="beer0">
+                                    <use xlink:href="assets/img/beer.svg#beersvg" />
+                                </svg>
+                                <svg id="beer1">
+                                    <use xlink:href="assets/img/beer.svg#beersvg" />
+                                </svg>
+                                <svg id="beer2">
+                                    <use xlink:href="assets/img/beer.svg#beersvg" />
+                                </svg>
+                                <svg id="beer3">
+                                    <use xlink:href="assets/img/beer.svg#beersvg" />
+                                </svg>
+                                <svg id="beer4">
+                                    <use xlink:href="assets/img/beer.svg#beersvg" />
+                                </svg>
+                            </svg>
+                        </p>
                     </div>
                     <div class="six wide column">
                         <h3 class="ui header">Flavor Profile</h3>
-                        <notes>IBU/ABV, Hoppy, Malt</notes>
-                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                        <p>Bitterness is expressed by a beer's International Bitterness rating (IBU). </p>
+                        <p>Determining sweetness for a beer is not as straightforward as it seems. According to the beer community,
+                        sweetness can be measured by the ratio of IBU to the beer's starting gravity (OG). However, there is an alternative way
+                        to measure a beer's sweetness(more so its balance), and that is by measuring the Real Terminal Extract (RTE, Balling).
+                        This measurement is what we used to calculate sweetness.
+
+                        <p>Lets find out!</p>
+                        <p>Click on the buttons to sort these beer styles.</p>
+                        <div id="sort" class="ui buttons">
+                            <button id="bitter" class="ui button blue">Bitterness</button>
+                            <div class="or" data-text="or"></div>
+                            <button id="sweet" class="ui button pink">Sweetness</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="ui vertical stripe segment">
+        <!--  <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
-                <div class="row">
-                    <!-- Viz #3 -->
-                    <div class="six wide column">
+                <div class="row"> -->
+        <!-- Viz #3 -->
+        <!-- <div class="six wide column">
                         <h3 class="ui header">Glassware - Maja</h3>
                         <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
                     </div>
@@ -151,12 +182,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="ui vertical stripe segment">
+        </div> -->
+        <!-- <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
-                <div class="row">
-                    <!-- Viz #4 -->
-                    <div id="" class="ten wide column">
+                <div class="row"> -->
+        <!-- Viz #4 -->
+        <!-- <div id="" class="ten wide column">
                     </div>
                     <div class="six wide column">
                         <h3 class="ui header">Food Pairing</h3>
@@ -164,7 +195,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
                 <div class="row">

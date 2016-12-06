@@ -79,10 +79,8 @@ function draw(root) {
     height2 = $("#circlePacking").offsetHeight;
 
     var rect = document.getElementById("circlePacking").getBoundingClientRect();
-    console.log(rect);
     var width = rect.width;
     var diameter = width;
-    console.log(width);
 
     var svg = d3.select("#circlePacking").append("svg")
         .attr("width", width)
@@ -109,6 +107,7 @@ function draw(root) {
             return b.value - a.value;
         });
 
+    console.log(root);
     var focus = root,
         nodes = pack(root).descendants(),
         view;
@@ -132,7 +131,6 @@ function draw(root) {
             }
         })
         .on("click", function(d) {
-            console.log(d);
             var key = d3.select(this).attr('id');
             var id = categoryId[d.depth];
 
@@ -183,7 +181,9 @@ function draw(root) {
 
         transition.selectAll("text")
             .filter(function(d) {
-                return d.parent === focus || this.style.display === "inline";
+                if (typeof d !== 'undefined') {
+                  return d.parent === focus || this.style.display === "inline";
+              }
             })
             .style("fill-opacity", function(d) {
                 return d.parent === focus ? 1 : 0;
@@ -264,8 +264,6 @@ function lookup(id, key, gp, p) {
                 }
             })
             .fail(function(data) {
-                console.log('fail');
-                console.log(data);
             });
     } else {
       buildDefault();

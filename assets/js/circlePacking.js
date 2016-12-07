@@ -19,19 +19,19 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                     terms: {
                         field: "style.category.name",
                         exclude: "", // exclude empty strings.
-                        size: 3 // limit to top 5 categories (out of 17).
+                        size: 17 // limit to top 5 categories (out of 17).
                     },
                     aggs: {
                         styles: {
                             terms: {
                                 field: "style.name",
-                                size: 6 // limit to top 5 styles per cateogry. 
+                                size: 5 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
                                         field: "nameDisplay",
-                                        size: 6,
+                                        size: 10,
                                         order: {
                                             _term: "desc"
                                         }
@@ -84,7 +84,7 @@ function draw(root) {
 
     var svg = d3.select("#circlePacking").append("svg")
         .attr("width", width)
-        .attr("height", 900)
+        .attr("height", $(window).height())
         .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
@@ -292,7 +292,7 @@ function buildStyle(res) {
   $("#description").html(res.hits[0]._source.style.description);
   $("#style .total").html(res.total);
 
-  var abvMin = abvMax = "-1";
+  var abvMin = abvMax = "&infin;";
   if (typeof res.hits[0]._source.style.abvMin !== 'undefined') {
     abvMin = res.hits[0]._source.style.abvMin;
   }
@@ -301,8 +301,7 @@ function buildStyle(res) {
   }
   var abv =  abvMin + "% - " + abvMax + "%";
 
-  var ibuMin = "-1";
-  var ibuMax = "-1";
+  var ibuMin = ibuMax = "&infin;";
   if (typeof res.hits[0]._source.style.ibuMin !== 'undefined') {
     ibuMin = res.hits[0]._source.style.ibuMin;
   }
@@ -311,8 +310,28 @@ function buildStyle(res) {
   }
   var ibu = ibuMin + " - " + ibuMax;
 
+  var ogMin = ogMax = "&infin;";
+  if (typeof res.hits[0]._source.style.ogMin !== 'undefined') {
+    ogMin = res.hits[0]._source.style.ogMin;
+  }
+  if (typeof res.hits[0]._source.style.ogMax !== 'undefined') {
+    ogMax = res.hits[0]._source.style.ogMax;
+  }
+  var og = ogMin + " - " + ogMax;
+
+  var fgMin = fgMax = "&infin;";
+  if (typeof res.hits[0]._source.style.fgMin !== 'undefined') {
+    fgMin = res.hits[0]._source.style.fgMin;
+  }
+  if (typeof res.hits[0]._source.style.fgMax !== 'undefined') {
+    fgMax = res.hits[0]._source.style.fgMax;
+  }
+  var fg = fgMin + " - " + fgMax;
+
   $("#style .rangeabv").html(abv);
   $("#style .rangeibu").html(ibu);
+  $("#style .rangeog").html(og);
+  $("#style .rangefg").html(fg);
   $("#style").show();
 }
 

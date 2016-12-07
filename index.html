@@ -43,7 +43,7 @@
         <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
-                    <div class="seven wide column">
+                    <div class="ui seven wide column grid">
                         <h3 id="categories" class="ui header">Beer Categories and Styles</h3>
                         <p class="default">The beer community has used styles to group beers of similar color, fragrance, flavor, bitterness or origin for years. By knowing the style of a beer, you can know what to expect when you enjoy it.</p>
                         <p class="default">Double click on the interactive visualization to drill down to specific beer styles and example beers that fit into that category.</p>
@@ -113,6 +113,10 @@
                                                 <td class="glass"></td>
                                             </tr>
                                             <tr>
+                                                <td><b>Serving Temperature</b></td>
+                                                <td class="st"></td>
+                                            </tr>
+                                            <tr>
                                                 <td><b>Organic</b></td>
                                                 <td class="organic"></td>
                                             </tr>
@@ -124,6 +128,10 @@
                                                 <td><b>Location</b></td>
                                                 <td class="location"></td>
                                             </tr>
+                                            <tr>
+                                                <td><b>Food Pairings</b></td>
+                                                <td class="food"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -131,7 +139,7 @@
                         </div>
                     </div>
                     <!-- Viz #1 -->
-                    <div id="circlePacking" class="nine wide right floated column"></div>
+                    <div id="circlePacking" class="nine wide right svg-content-responsive floated column"></div>
                 </div>
             </div>
         </div>
@@ -181,7 +189,7 @@
                 <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
             </div>
             <div class="ui column centered grid">
-                <div id="graph" class="column"></div>
+                <!-- <div id="graph" class="column"></div> -->
             </div>
         </div>
         <div class="ui vertical stripe segment">

@@ -79,12 +79,12 @@ function draw(root) {
     height2 = $("#circlePacking").offsetHeight;
 
     var rect = document.getElementById("circlePacking").getBoundingClientRect();
-    var width = rect.width;
+    var width = rect.width + 100;
     var diameter = width;
 
     var svg = d3.select("#circlePacking").append("svg")
         .attr("width", width)
-        .attr("height", $(window).height())
+        .attr("height", 800)
         .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
@@ -363,13 +363,29 @@ function buildBeer(res) {
   if (typeof res.hits[0]._source.breweries[0].locations[0].country.displayName !== 'undefined') {
     location = location + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName
   }
-  // var location = res.hits[0]._source.breweries[0].locations[0].region + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName;
 
   if (typeof res.hits[0]._source.breweries[0].locations[0].locality !== 'undefined') {
     location = res.hits[0]._source.breweries[0].locations[0].locality + ", " + location;
   }
 
   $("#beer .location").html(location);
+
+  // Serving Temperature
+  var st = "Unknown";
+  if (typeof res.hits[0]._source.servingTemperatureDisplay !== 'undefined') {
+    st = res.hits[0]._source.servingTemperatureDisplay;
+  }
+
+  $("#beer .st").html(st);
+
+  // Food Pairings
+  var food = "Unknown";
+  if (typeof res.hits[0]._source.foodPairings !== 'undefined') {
+    food = res.hits[0]._source.foodPairings;
+  }
+
+  $("#beer .food").html(food);
+
   $("#beer").show();
 }
 

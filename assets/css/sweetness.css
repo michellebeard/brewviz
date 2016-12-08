@@ -1,0 +1,13 @@
+.tick line {
+    stroke-dasharray: 2 2 ;
+    stroke: #ccc;
+}
+
+#graph {
+    width: 900px;
+    height: 500px;
+}
+
+.padding {
+	padding-bottom: 4em;
+}

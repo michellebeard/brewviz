@@ -12,16 +12,16 @@ $(document).ready(function() {
             }
         });
 
-    resizeDiv(".masthead");
+    // resizeDiv(".masthead");
 
-    window.onresize = function(event) {
-        resizeDiv();
-    }
+    // window.onresize = function(event) {
+    //     resizeDiv();
+    // }
 
-    function resizeDiv(e) {
-        vph = $(window).height();
-        $(e).css({'height': vph + 'px'});
-    }
+    // function resizeDiv(e) {
+    //     vph = $(window).height();
+    //     $(e).css({'height': vph + 'px'});
+    // }
 
     // create sidebar and attach to menu open
     $('.ui.sidebar')

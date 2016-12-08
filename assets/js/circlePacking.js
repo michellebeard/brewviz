@@ -19,22 +19,20 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                     terms: {
                         field: "style.category.name",
                         exclude: "", // exclude empty strings.
-                        size: 17 // limit to top 5 categories (out of 17).
+                        size: 20 
                     },
                     aggs: {
                         styles: {
                             terms: {
                                 field: "style.name",
-                                size: 5 // limit to top 5 styles per cateogry. 
+                                size: 20 // limit to top 5 styles per cateogry. 
                             },
                             aggs: {
                                 beer: {
                                     terms: {
                                         field: "nameDisplay",
-                                        size: 10,
-                                        order: {
-                                            _term: "desc"
-                                        }
+                                        exclude: "",
+                                        size: 20
                                     }
                                 }
                             }
@@ -68,16 +66,6 @@ var mappings = { 'style.category.name': 'style.category', 'style.name': 'style',
 var categoryData = { 'style.category': ['name'], 'style': ['name', 'description', "abvMin", "abvMax"], 'name': ['name', 'description', 'isOrganic'] };
 
 function draw(root) {
-    var margin = { top: 400, right: 480, bottom: 500, left: 400 };
-
-    // var width = margin.left + margin.right,
-    //     height = margin.top + margin.bottom;
-
-    // diameter = width;
-
-    width2 = $("#circlePacking").offsetWidth;
-    height2 = $("#circlePacking").offsetHeight;
-
     var rect = document.getElementById("circlePacking").getBoundingClientRect();
     var width = rect.width + 100;
     var diameter = width;
@@ -357,7 +345,9 @@ function buildBeer(res) {
   var location = "";
 
   // Locality and region might not be defined 
-  if (typeof res.hits[0]._source.breweries[0].locations[0].region !== 'undefined') {
+  if (typeof res.hits[0]._source.breweries !== 'undefined' &&
+      typeof res.hits[0]._source.breweries[0].locations !== 'undefined' &&
+      typeof res.hits[0]._source.breweries[0].locations[0].region !== 'undefined') {
     location = res.hits[0]._source.breweries[0].locations[0].region;
   }
   if (typeof res.hits[0]._source.breweries[0].locations[0].country.displayName !== 'undefined') {
@@ -385,6 +375,57 @@ function buildBeer(res) {
   }
 
   $("#beer .fp").html(food);
+
+  // Ingredients
+
+  // Hops
+  var hops = "Unknown";
+  if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.hops !== 'undefined') {
+    hops = []
+    var hopsArray = res.hits[0]._source.ingredients.hops;
+    $.each(hopsArray, function (index, value) {
+        hops.push (value.name);
+    });
+    hops = hops.join(", ");
+  }
+
+  // Yeast 
+  var yeast = "Unknown";
+  if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.yeast !== 'undefined') {
+    yeast = []
+    var yeastArray = res.hits[0]._source.ingredients.yeast;
+    $.each(yeastArray, function (index, value) {
+        yeast.push (value.name);
+    });
+    yeast = yeast.join(", ");
+  }
+
+  // Malt
+  var malt = "Unknown";
+  if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.malt !== 'undefined') {
+    malt = []
+    var maltArray = res.hits[0]._source.ingredients.malt;
+    $.each(maltArray, function (index, value) {
+        malt.push (value.name);
+    });
+    malt = malt.join(", ");
+  }
+
+  // Misc
+  var misc = "Unknown";
+  if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.misc !== 'undefined') {
+    misc = []
+    var miscArray = res.hits[0]._source.ingredients.misc;
+    $.each(miscArray, function (index, value) {
+        misc.push (value.name);
+    });
+    misc = misc.join(", ");
+  }
+
+  $("#beer .hops").html(hops);
+  $("#beer .yeast").html(yeast);
+  $("#beer .malt").html(malt);
+  $("#beer .misc").html(misc);
 
   $("#beer").show();
 }

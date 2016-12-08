@@ -40,7 +40,7 @@
           "type" : "keyword"
         },  
         "foodPairings" : {
-          "type" : "keyword"
+          "type" : "text"
         },  
         "glass" : {
           "type" : "object",

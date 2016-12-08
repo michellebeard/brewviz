@@ -384,7 +384,7 @@ function buildBeer(res) {
     food = res.hits[0]._source.foodPairings;
   }
 
-  $("#beer .food").html(food);
+  $("#beer .fp").html(food);
 
   $("#beer").show();
 }

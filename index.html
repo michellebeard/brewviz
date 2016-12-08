@@ -17,14 +17,14 @@
     <script>
     require(["assets/js/flavor"], function() {})
     </script>
-    <script src="assets/js/sweetness.js" type="text/javascript"></script>
+    <!-- <script src="assets/js/sweetness.js" type="text/javascript"></script> -->
     <!-- Third Library CSS -->
     <link rel="stylesheet" type="text/css" href="assets/third_party/semantic/dist/semantic.min.css">
     <!-- BrewViz Assets -->
     <script type="text/javascript" src="assets/js/brewviz.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/brewviz.css">
     <link rel="stylesheet" type="text/css" href="assets/css/circlePacking.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/sweetness.css">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/sweetness.css"> -->
     <!-- Site Properties -->
     <title>BrewViz</title>
 </head>
@@ -130,7 +130,7 @@
                                             </tr>
                                             <tr>
                                                 <td><b>Food Pairings</b></td>
-                                                <td class="food"></td>
+                                                <td class="fp"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -148,6 +148,29 @@
                 <div class="row">
                     <!-- Viz #2 -->
                     <div id="flavor" class="ten wide column">
+                        <p>
+                            <svg id="burger" class="food">
+                                <use xlink:href="assets/img/burger.svg#burgersvg" />
+                            </svg>
+                            <svg id="fish" class="food">
+                                <use xlink:href="assets/img/fish.svg#fishsvg" />
+                            </svg>
+                            <svg id="pizza" class="food">
+                                <use xlink:href="assets/img/pizza.svg#pizzasvg" />
+                            </svg>
+                            <svg id="indian" class="food">
+                                <use xlink:href="assets/img/indian.svg#indiansvg" />
+                            </svg>
+                            <svg id="asian" class="food">
+                                <use xlink:href="assets/img/noodles.svg#noodlessvg" />
+                            </svg>
+                            <svg id="vegetable" class="food">
+                                <use xlink:href="assets/img/broccoli.svg#broccolisvg" />
+                            </svg>
+                            <svg id="dessert" class="food">
+                                <use xlink:href="assets/img/cake.svg#cakesvg" />
+                            </svg>
+                        </p>
                         <p>
                             <svg id="beers" class="beersvg">
                                 <svg id="beer0">

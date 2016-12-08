@@ -25,7 +25,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                             avg: {
                                 field: "ibu"
                             }
-                        }, 
+                        },
                         og: {
                             avg: {
                                 field: "originalGravity"
@@ -48,131 +48,77 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
     }).then(function(resp) {
         var data = createChildNodes(resp);
         console.log(data);
+        var num_beers = data.beer.length;
+        var font_size = 16;
+
+        // desired icon size and spacing 
+        var icon_size = 100;
+        var icon_spacing = 10;
+        var food_size = icon_size / 2;
+
         // Put your d3 code here
         var rect = document.getElementById("flavor").getBoundingClientRect();
         var width = rect.width;
-        var dimensions = [width, "400"];
 
-        var icon_size = ["100", "140"];
-        var icon_ypos = "120";
-        var icon_xpos = ["0", "100", "200", "300", "400"];
+        var dimensions = [width, (icon_size * num_beers) + (icon_spacing * (num_beers - 1))];
+        var icon_dims = [dimensions[0] * 2, icon_size];
+        var icon_xpos = -(parseInt(icon_dims[0]) / 2) + (parseInt(icon_dims[1]) / 2);
+        var icon_ypos = [0,
+            1 * (icon_size + icon_spacing),
+            2 * (icon_size + icon_spacing),
+            3 * (icon_size + icon_spacing),
+            4 * (icon_size + icon_spacing)
+        ];
+
         var grad_color = ["#ffcc00", "#ffb700", "#ffa100", "#ff8c00", "#ff7700"];
 
-        var beer = d3.select("#beers")
+        var canvas = d3.select("#beers")
             .attr("width", dimensions[0])
             .attr("height", dimensions[1]);
 
-        var beer0 = d3.select("#beer0")
-            .attr("x", icon_xpos[0])
-            .attr("y", icon_ypos)
-            .attr("width", icon_size[0])
-            .attr("height", icon_size[1])
-            .attr("fill", grad_color[0]);
+        var beers = [num_beers];
 
-        var beer1 = d3.select("#beer1")
-            .attr("x", icon_xpos[1])
-            .attr("y", icon_ypos)
-            .attr("width", icon_size[0])
-            .attr("height", icon_size[1])
-            .attr("fill", grad_color[1]);
+        for (var i = 0; i < num_beers; i++) {
+            beers[i] = d3.select("#beer" + i)
+                .attr("x", icon_xpos)
+                .attr("y", icon_ypos[i])
+                .attr("width", icon_dims[0])
+                .attr("height", icon_dims[1])
+                .attr("fill", grad_color[i]);
+        }
 
-        var beer2 = d3.select("#beer2")
-            .attr("x", icon_xpos[2])
-            .attr("y", icon_ypos)
-            .attr("width", icon_size[0])
-            .attr("height", icon_size[1])
-            .attr("fill", grad_color[2]);
+        var food_icons = d3.selectAll(".food")
+            .attr("width", food_size)
+            .attr("height", food_size)
+            .attr("fill", "black");
 
-        var beer3 = d3.select("#beer3")
-            .attr("x", icon_xpos[3])
-            .attr("y", icon_ypos)
-            .attr("width", icon_size[0])
-            .attr("height", icon_size[1])
-            .attr("fill", grad_color[3]);
+        var beerlabels = [num_beers];
 
-        var beer4 = d3.select("#beer4")
-            .attr("x", icon_xpos[4])
-            .attr("y", icon_ypos)
-            .attr("width", icon_size[0])
-            .attr("height", icon_size[1])
-            .attr("fill", grad_color[4]);
-
-        var beerlabel0 = beer0.append("text")
-            .text(data.beer[0].key)
-            .attr("x", icon_size[0] / 2)
-            .attr("y", icon_size[1] - 5)
-            .attr("text-anchor", "middle")
-            .attr("fill", grad_color[0]);
-
-        var beerlabel1 = beer1.append("text")
-            .text(data.beer[1].key)
-            .attr("x", icon_size[0] / 2)
-            .attr("y", icon_size[1] - 5)
-            .attr("text-anchor", "middle")
-            .attr("fill", grad_color[1]);
-
-        var beerlabel2 = beer2.append("text")
-            .text(data.beer[2].key)
-            .attr("x", icon_size[0] / 2)
-            .attr("y", icon_size[1] - 5)
-            .attr("text-anchor", "middle")
-            .attr("fill", grad_color[2]);
-
-        var beerlabel3 = beer3.append("text")
-            .text(data.beer[3].key)
-            .attr("x", icon_size[0] / 2)
-            .attr("y", icon_size[1] - 5)
-            .attr("text-anchor", "middle")
-            .attr("fill", grad_color[3]);
-
-        var beerlabel4 = beer4.append("text")
-            .text(data.beer[4].key)
-            .attr("x", icon_size[0] / 2)
-            .attr("y", icon_size[1] - 5)
-            .attr("text-anchor", "middle")
-            .attr("fill", grad_color[4]);
+        for (var i = 0; i < num_beers; i++) {
+            beerlabels[i] = beers[i].append("text")
+                .text(data.beer[i].key)
+                .attr("x", dimensions[0] + icon_dims[1] / 2)
+                .attr("y", (icon_dims[1] / 2) + font_size)
+                .attr("fill", grad_color[i]);
+        }
 
         var reorderIcons = function() {
-            for (var i = 0; i < 5; i++) {
-                if (beerlabel0.text() == data.beer[i].key) {
-                    beer0.transition()
-                        .duration(1000)
-                        .attr("x", icon_xpos[i]);
-                }
-            }
-
-            for (var i = 0; i < 5; i++) {
-                if (beerlabel1.text() == data.beer[i].key) {
-                    beer1.transition()
-                        .duration(1000)
-                        .attr("x", icon_xpos[i]);
-                }
-            }
-
-            for (var i = 0; i < 5; i++) {
-                if (beerlabel2.text() == data.beer[i].key) {
-                    beer2.transition()
-                        .duration(1000)
-                        .attr("x", icon_xpos[i]);
-                }
-            }
-
-            for (var i = 0; i < 5; i++) {
-                if (beerlabel3.text() == data.beer[i].key) {
-                    beer3.transition()
-                        .duration(1000)
-                        .attr("x", icon_xpos[i]);
-                }
-            }
-
-            for (var i = 0; i < 5; i++) {
-                if (beerlabel4.text() == data.beer[i].key) {
-                    beer4.transition()
-                        .duration(1000)
-                        .attr("x", icon_xpos[i]);
+            for (var j = 0; j < num_beers; j++) {
+                for (var i = 0; i < num_beers; i++) {
+                    if (beerlabels[j].text() == data.beer[i].key) {
+                        beers[j].transition()
+                            .duration(1000)
+                            .attr("y", icon_ypos[i]);
+                    }
                 }
             }
         };
+
+        d3.selectAll(".food")
+            .on("click", function() {
+                var term = this.id;
+                makeFoodRequest(term);
+            });
 
         d3.select("#bitter")
             .on("click", function() {
@@ -191,8 +137,8 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                     function(x, y) {
                         // Compute sweetness = 0.82 X FG + 0.18 x OG
                         // Ref: https://klugscheisserbrauerei.wordpress.com/beer-balance/
-                        var xAvgFG = (x.fgMax.value + x.fgMin.value)/2;
-                        var yAvgFG = (y.fgMax.value + y.fgMin.value)/2;
+                        var xAvgFG = (x.fgMax.value + x.fgMin.value) / 2;
+                        var yAvgFG = (y.fgMax.value + y.fgMin.value) / 2;
 
                         var xRte = 0.82 * xAvgFG + 0.18 * x.og.value;
                         var yRte = 0.82 * yAvgFG + 0.18 * y.og.value;
@@ -203,6 +149,33 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                 reorderIcons();
             });
 
+        var showBeerPairings = function(food, checkFood) {
+            for (var j = 0; j < num_beers; j++) {
+                for (var i = 0; i < 5; i++) {
+                    if ((beerlabels[j].text() == data.beer[i].key) &&
+                        (beerlabels[j].text() == checkFood[i].key) &&
+                        (checkFood[i].food.buckets[food].doc_count <= 0)) {
+                        beers[j].transition()
+                            .duration(500)
+                            .attr("fill", "grey");
+
+                        beerlabels[j].transition()
+                            .duration(500)
+                            .attr("fill", "grey");
+                    } else if ((beerlabels[j].text() == data.beer[i].key) &&
+                        (beerlabels[j].text() == checkFood[i].key) &&
+                        (checkFood[i].food.buckets[food].doc_count > 0)) {
+                        beers[j].transition()
+                            .duration(500)
+                            .attr("fill", grad_color[j]);
+
+                        beerlabels[j].transition()
+                            .duration(500)
+                            .attr("fill", grad_color[j]);
+                    } 
+                }
+            }
+        }
 
         function createChildNodes(dataObj) {
             var root = {};
@@ -210,5 +183,57 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             return root;
         }
 
+        function makeFoodRequest(term) {
+            var pairing = "foodPairings:" + term;
+
+            var query = {
+                "size": 0,
+                "query": {
+                    "bool": {
+                        "must": [{
+                            "query_string": {
+                                "query": "*",
+                                "analyze_wildcard": true
+                            }
+                        }],
+                        "must_not": []
+                    }
+                },
+                "aggs": {
+                    "styles": {
+                        "terms": {
+                            "field": "style.name",
+                            "size": 5
+                        },
+                        "aggs": {
+                            "food": {
+                                "filters": {
+                                    "filters": {
+                                        [term]: {
+                                            "query_string": {
+                                                "query": pairing
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            $.ajax({
+                    method: "POST",
+                    url: "http://localhost:9200/brew/_search?pretty=true",
+                    crossDomain: true,
+                    data: JSON.stringify(query),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                })
+                .done(function(data) {
+                    showBeerPairings(term, data.aggregations.styles.buckets);
+                })
+                .fail(function(data) {});
+        }
     });
 });

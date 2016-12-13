@@ -17,7 +17,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             aggs: {
                 styles: {
                     terms: {
-                        field: "style.name",
+                        field: "style.name.raw",
                         size: 5
                     },
                     aggs: {

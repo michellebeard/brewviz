@@ -16,8 +16,11 @@ services:
   logstash:
     build: ./docker/logstash
     container_name: brewviz-logstash
+    command: -f /etc/logstash/conf.d
     volumes:
       - ./data:/var/log/brew
+      - ./docker/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf
+      - ./docker/logstash/brew.json:/usr/share/logstash/templates/brew.json
     links:
       - elasticsearch
     environment:

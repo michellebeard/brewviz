@@ -21,7 +21,7 @@
               "type" : "keyword"
             },
             "description" : {
-              "type" : "keyword"
+              "type" : "text"
             }
           }
         },
@@ -37,7 +37,7 @@
           "format" : "yyyy-MM-dd HH:mm:ss"
         },
         "description" : {
-          "type" : "keyword"
+          "type" : "text"
         },  
         "foodPairings" : {
           "type" : "text"
@@ -71,10 +71,20 @@
           "type" : "keyword"
         },  
         "name" : {
-          "type" : "keyword"
+          "type" : "text",
+          "fields" : {
+            "raw" : {
+              "type": "keyword"
+            }
+          }
         },
         "nameDisplay" : {
-          "type" : "keyword"
+          "type" : "text",
+          "fields" : {
+            "raw" : {
+              "type" : "keyword"
+            }
+          }
         },
         "originalGravity" : {
           "type" : "float"
@@ -119,19 +129,29 @@
               "type" : "integer"
             },
             "name" : {
-              "type" : "keyword"
+              "type" : "text",
+              "fields" : {
+                "raw" : {
+                  "type" : "keyword"
+                }
+              }
             },
             "shortName" : {
               "type" : "keyword"
             },
             "description" : {
-              "type" : "keyword"
+              "type" : "text"
             },  
             "category" : {
               "type" : "object",
               "properties" : {
                 "name" : {
-                  "type" : "keyword"
+                  "type" : "text",
+                  "fields" : {
+                    "raw" : {
+                      "type" : "keyword"
+                    }
+                  }
                 }
               }
             }          

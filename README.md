@@ -5,6 +5,28 @@ Developers: Michelle Beard, Alena Borisenko, and Maja Milosavljevic
 
 This project will create an exploratory tool that would help users discover beer facts and breakdowns on their favorite beers.
 
+## Web Visualization Screenshots
+
+### Splash
+![Spash Screen]
+(https://github.com/mooshu1x2/brewviz/blob/master/docs/splash.png)
+
+### CirclePack Visualization 
+![CirclePack]
+(https://github.com/mooshu1x2/brewviz/blob/master/docs/circlepack.png)
+
+### Zoomed View
+![Zoomed]
+(https://github.com/mooshu1x2/brewviz/blob/master/docs/beer2.png)
+
+### Search/Filter on Pizza
+![Search]
+(https://github.com/mooshu1x2/brewviz/blob/master/docs/pizza.png)
+
+### Pizza Results
+![Pizza]
+(https://github.com/mooshu1x2/brewviz/blob/master/docs/beer.png)
+
 ## Full Deployment Instructions
 
 ### Generate Beer Data
@@ -72,7 +94,11 @@ This project will create an exploratory tool that would help users discover beer
     $ ./scripts/clean_docker.sh
     ```
 
-### Todos
+## Todos
+1. Add additional filter capabilities, such as filtering on IBU and sweetness values.
+2. Add beer imagery data on leaf nodes if available.
+3. Color nodes based on beer SRM (beer color system).
+4. On hover to explain abbreviations instead of creating a legend.
 
 License
 ----

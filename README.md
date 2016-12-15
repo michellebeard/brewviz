@@ -1,4 +1,7 @@
-# BrewViz
+# BrewViz 
+
+<https://github.com/mooshu1x2/brewviz>
+
 Comp177 Final Project: BrewViz
 
 Developers: Michelle Beard, Alena Borisenko, and Maja Milosavljevic

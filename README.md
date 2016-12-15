@@ -40,15 +40,15 @@ This project will create an exploratory tool that would help users discover beer
     ```sh
     $ docker-compose up -d elasticsearch 
     $ docker-compose up -d logstash
-    $ docker-comopse up -d kibana
+    $ docker-compose up -d kibana
     ```
     
-3. Verify the deployment by navigating to Kibana in your preferred browser.
+3. (Optional) Verify the deployment by navigating to Kibana in your preferred browser.
     ```sh
     http://localhost:5601
     ```
 
-4. When prompted to create a new index in Kibana, enter "brew". You will be able to see all the logs in Elasticsearch.
+4. (Optional) When prompted to create a new index in Kibana, enter "brew". You will be able to see all the logs in Elasticsearch.
     
 5. (Optional) If you want to reingest all the data, you will need to delete all indices and reingest the data:
     ```sh
@@ -63,13 +63,14 @@ This project will create an exploratory tool that would help users discover beer
     $ ./scripts/runServer.sh
     ```
 
-2. Open web browser to localhost:8000
+2. Open web browser to http://localhost:8000
 
 3. Once done with viewing, shutdown the webserver and docker containers.
     ```sh
-    $ kill -9 pid; where pid is the id to the python script runServer.sh
+    $ kill -9 pid; where pid is the id to the script runServer.sh
     $ docker-compose stop
     $ ./scripts/clean_docker.sh
+    ```
 
 ### Todos
 

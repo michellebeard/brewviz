@@ -4,4 +4,3 @@ docs/brew*
 env
 es/data
 es/logs
-scripts/data/beers.json

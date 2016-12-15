@@ -1,4 +1,0 @@
-#!/bin/bash
-
-python -m SimpleHTTPServer > /dev/null 2>&1 &
-

@@ -29,12 +29,14 @@ This project will create an exploratory tool that would help users discover beer
 (https://github.com/mooshu1x2/brewviz/blob/master/docs/beer.png)
 
 ## Full Deployment Instructions
+We use Docker to containerize our entire development stack except for the webserver. 
 
 ### Clone
 
 1. Checkout our repo
     ```sh
     $ git clone https://github.com/mooshu1x2/brewviz.git BrewViz
+    
     ```
     
 ### Generate Beer Data

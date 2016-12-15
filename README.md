@@ -29,7 +29,7 @@ This project will create an exploratory tool that would help users discover beer
 (https://github.com/mooshu1x2/brewviz/blob/master/docs/beer.png)
 
 ## Full Deployment Instructions
-We use Docker to containerize our entire development stack except for the webserver. 
+We use Docker to containerize our entire development stack. 
 
 ### Clone
 
@@ -71,6 +71,7 @@ We use Docker to containerize our entire development stack except for the webser
 2. Autobuild and run Docker containers
     ```sh
     $ docker-compose up -d elasticsearch 
+    $ docker-compose up -d startup
     $ docker-compose up -d logstash
     $ docker-compose up -d kibana
     ```
@@ -82,24 +83,18 @@ We use Docker to containerize our entire development stack except for the webser
 
 4. (Optional) When prompted to create a new index in Kibana, enter "brew". You will be able to see all the logs in Elasticsearch.
     
-5. (Optional) If you want to reingest all the data, you will need to delete all indices and reingest the data:
+5. (Optional) If you want to reingest all the data, you will need to restart the docker containers.
     ```sh
-    $ ./scripts/cleanup.sh
-    $ docker-compose up -d logstash
+    $ docker-compose stop 
+    $ docker-compose up -d 
     ```
 
 ### To View BrewViz Tutorial page
-1. Launch web server quietly.
 
+1. Open web browser to http://localhost:8000
+
+2. Once done with viewing, shutdown the docker containers.
     ```sh
-    $ ./scripts/runServer.sh
-    ```
-
-2. Open web browser to http://localhost:8000
-
-3. Once done with viewing, shutdown the webserver and docker containers.
-    ```sh
-    $ kill -9 pid; where pid is the id to the script runServer.sh
     $ docker-compose stop
     $ ./scripts/clean_docker.sh
     ```

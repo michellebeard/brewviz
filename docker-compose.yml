@@ -1,5 +1,19 @@
 version: "2"
 services:
+  # Startup - Init script to initialize indices and templates and startup webserver
+  startup:
+    build: ./docker/startup
+    container_name: brewviz-start
+    ports:
+      - 8000:80
+    volumes:
+      - ./www:/var
+    links:
+      - elasticsearch
+    depends_on: 
+      - "elasticsearch"
+    command: bash /opt/entrypoint.sh
+
   # ELK Stack
   elasticsearch:
     build: ./docker/es
@@ -13,6 +27,7 @@ services:
       - ./docker/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+
   logstash:
     build: ./docker/logstash
     container_name: brewviz-logstash
@@ -23,8 +38,10 @@ services:
       - ./docker/logstash/brew.json:/usr/share/logstash/templates/brew.json
     links:
       - elasticsearch
+      - startup
     environment:
       LS_HEAP_SIZE: "2048m"
+      
   kibana:
     build: ./docker/kibana
     container_name: brewviz-kibana

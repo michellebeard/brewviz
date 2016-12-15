@@ -30,6 +30,13 @@ This project will create an exploratory tool that would help users discover beer
 
 ## Full Deployment Instructions
 
+### Clone
+
+1. Checkout our repo
+    ```sh
+    $ git clone https://github.com/mooshu1x2/brewviz.git BrewViz
+    ```
+    
 ### Generate Beer Data
 
 1. Create virtual environment

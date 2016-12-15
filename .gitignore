@@ -1,3 +1,5 @@
+.DS_Store
+docs/*
 scripts/env
 scripts/es/*
 scripts/data/beers.json

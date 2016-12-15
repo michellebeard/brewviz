@@ -1,5 +1,6 @@
 .DS_Store
-docs/*
+docs/*.mp4
+docs/brew*
 env
 es/data
 es/logs

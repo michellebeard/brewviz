@@ -43,4 +43,4 @@ if __name__ == '__main__':
     search_url = 'https://api.brewerydb.com/v2/search'
     styles_url = 'https://api.brewerydb.com/v2/styles'
 
-    getBeer(beers_url, payload["beers"], "data/beers")
+    getBeer(beers_url, payload["beers"], "scripts/data/beers")

@@ -1,3 +1,4 @@
+$("#404").hide();
 define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticsearch) {
     "use strict";
 
@@ -20,7 +21,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             max: 55,
             start: 1,
             onChange: function(value) {
-              genQuery();
+                genQuery();
             },
             input: '#range-abv-value'
         });
@@ -33,7 +34,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
             }
         });
 
-       genQuery();
+        genQuery();
 
     });
 
@@ -101,7 +102,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                         multi_match: {
                             query: term,
                             type: "best_fields",
-                            fields: ["name", "nameDisplay", "style.category.name", "style.name", "description"]
+                            fields: ["name", "nameDisplay", "style.category.name", "style.name", "style.description", "description", "foodPairings"]
                         }
                     },
                     filter: {
@@ -137,14 +138,16 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
     function execute(query) {
         client.search(setupParams(query), function(err, resp) {
             if (err) {
-                throw err;
+                $("#404").text(err);
             }
             d3.select("svg").remove();
             if (resp.hits.total !== 0) {
-              var root = createChildNodes(resp);
-              draw(root);
+                $("#404").hide();
+                var root = createChildNodes(resp);
+                draw(root);
             } else {
-              // Show Empty results div
+                // Show Empty results div
+                $("#404").show();
             }
         });
     }
@@ -157,9 +160,9 @@ function createChildNodes(dataObj) {
     root.children.forEach(function(d) { d.children = d.styles.buckets; });
     root.children.forEach(function(d) {
         d.children.forEach(function(d) {
-            // d.sample.beer.buckets.forEach(function(d, i) {
-            //     d.doc_count = 1;
-            // });
+            d.sample.beer.buckets.forEach(function(d, i) {
+                d.doc_count = 1;
+            });
             d.children = d.sample.beer.buckets;
         });
     });
@@ -500,7 +503,7 @@ function buildBeer(res) {
 
     // Hops
     var hops = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' &&
         typeof res.hits[0]._source.ingredients.hops !== 'undefined') {
         hops = []
         var hopsArray = res.hits[0]._source.ingredients.hops;
@@ -512,7 +515,7 @@ function buildBeer(res) {
 
     // Yeast 
     var yeast = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' &&
         typeof res.hits[0]._source.ingredients.yeast !== 'undefined') {
         yeast = []
         var yeastArray = res.hits[0]._source.ingredients.yeast;
@@ -524,7 +527,7 @@ function buildBeer(res) {
 
     // Malt
     var malt = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' &&
         typeof res.hits[0]._source.ingredients.malt !== 'undefined') {
         malt = []
         var maltArray = res.hits[0]._source.ingredients.malt;
@@ -536,8 +539,7 @@ function buildBeer(res) {
 
     // Misc
     var misc = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' 
-        && typeof res.hits[0]._source.ingredients.misc !== 'undefined') {
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.misc !== 'undefined') {
         misc = []
         var miscArray = res.hits[0]._source.ingredients.misc;
         $.each(miscArray, function(index, value) {

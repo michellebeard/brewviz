@@ -149,30 +149,32 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                 reorderIcons();
             });
 
-        var showBeerPairings = function(food, checkFood) {
+        var showBeerPairings = function(term, keywords) {
+            // for each beer label icon and label
             for (var j = 0; j < num_beers; j++) {
-                for (var i = 0; i < 5; i++) {
-                    if ((beerlabels[j].text() == data.beer[i].key) &&
-                        (beerlabels[j].text() == checkFood[i].key) &&
-                        (checkFood[i].food.buckets[food].doc_count <= 0)) {
-                        beers[j].transition()
-                            .duration(500)
-                            .attr("fill", "grey");
+                // for each beer from the num_beers chunk of data 
+                for (var i = 0; i < num_beers; i++) {
+                    // if a certain piece of data corresponds to this label
+                    if (beerlabels[j].text() == keywords[i].key) {
+                        if (keywords[i].food.buckets[term].doc_count > 0) {
+                            beers[j].transition()
+                                .duration(500)
+                                .attr("fill", grad_color[j]);
 
-                        beerlabels[j].transition()
-                            .duration(500)
-                            .attr("fill", "grey");
-                    } else if ((beerlabels[j].text() == data.beer[i].key) &&
-                        (beerlabels[j].text() == checkFood[i].key) &&
-                        (checkFood[i].food.buckets[food].doc_count > 0)) {
-                        beers[j].transition()
-                            .duration(500)
-                            .attr("fill", grad_color[j]);
+                            beerlabels[j].transition()
+                                .duration(500)
+                                .attr("fill", grad_color[j]);
+                            break;
+                        } else if (keywords[i].food.buckets[term].doc_count <= 0) {
+                            beers[j].transition()
+                                .duration(500)
+                                .attr("fill", "grey");
 
-                        beerlabels[j].transition()
-                            .duration(500)
-                            .attr("fill", grad_color[j]);
-                    } 
+                            beerlabels[j].transition()
+                                .duration(500)
+                                .attr("fill", "grey");
+                        }
+                    }
                 }
             }
         }
@@ -202,7 +204,7 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                 "aggs": {
                     "styles": {
                         "terms": {
-                            "field": "style.name",
+                            "field": "style.name.raw",
                             "size": 5
                         },
                         "aggs": {

@@ -6,6 +6,9 @@ Developers: Michelle Beard, Alena Borisenko, and Maja Milosavljevic
 
 This project will create an exploratory tool that would help users discover beer facts and breakdowns on their favorite beers.
 
+## BrewViz Video!
+<a href="https://youtu.be/tSaYggDzW3w" target="_blank"><img src="https://github.com/mooshu1x2/brewviz/blob/master/docs/splash.png" 
+alt="Intro" width="700" height="400" border="10" /></a>
 ## Web Visualization Screenshots
 
 ### Splash

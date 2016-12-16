@@ -61,7 +61,8 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
 
         var dimensions = [width, (icon_size * num_beers) + (icon_spacing * (num_beers - 1))];
         var icon_dims = [dimensions[0] * 2, icon_size];
-        var icon_xpos = -(parseInt(icon_dims[0]) / 2) + (parseInt(icon_dims[1]) / 2);
+        //ALENA EDIT: var icon_xpos = -(parseInt(icon_dims[0]) / 2) + (parseInt(icon_dims[1]) / 2);
+        var icon_xpos = -(parseInt(icon_dims[0]) / 2) + (font_size) + (parseInt(icon_dims[1]) / 2);
         var icon_ypos = [0,
             1 * (icon_size + icon_spacing),
             2 * (icon_size + icon_spacing),
@@ -74,6 +75,22 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
         var canvas = d3.select("#beers")
             .attr("width", dimensions[0])
             .attr("height", dimensions[1]);
+        
+        ////////////////////////////////////// ALENA EDIT START
+        canvas.append("text")
+              .text("")
+              .attr("id", "most")
+              .attr("font-size", "20")
+              .attr("transform", "translate(22,100)rotate(270)")
+              .attr("fill", "black");
+
+        canvas.append("text")
+              .text("")
+              .attr("id", "least")
+              .attr("font-size", "20")
+              .attr("transform", "translate(22," + dimensions[1] + ")rotate(270)")
+              .attr("fill", "black");
+        ////////////////////////////////////// ALENA EDIT END
 
         var beers = [num_beers];
 
@@ -121,10 +138,21 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
 
         d3.select("#bitter")
             .on("click", function() {
+            
+                ////////////////////////////////////// ALENA EDIT START
+                d3.select("#most")
+                      .text("Most bitter");
+
+                d3.select("#least")
+                  .text("Least bitter");
+                ////////////////////////////////////// ALENA EDIT END
+            
                 data.beer.sort(
                     function(x, y) {
-                        return d3.ascending(x.bitterness.value,
-                            y.bitterness.value);
+                        // ALENA EDIT: return d3.ascending(x.bitterness.value,
+                        //                                 y.bitterness.value);
+                        return d3.descending(x.bitterness.value,
+                                            y.bitterness.value);
                     }
                 );
                 reorderIcons();
@@ -132,6 +160,15 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
 
         d3.select("#sweet")
             .on("click", function() {
+           
+                ////////////////////////////////////// ALENA EDIT START
+                d3.select("#most")
+                      .text("Most sweet");
+
+                d3.select("#least")
+                  .text("Least sweet");
+                ////////////////////////////////////// ALENA EDIT END
+            
                 data.beer.sort(
                     function(x, y) {
                         // Compute sweetness = 0.82 X FG + 0.18 x OG
@@ -142,7 +179,8 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
                         var xRte = 0.82 * xAvgFG + 0.18 * x.og.value;
                         var yRte = 0.82 * yAvgFG + 0.18 * y.og.value;
 
-                        return d3.ascending(xRte, yRte);
+                        // ALENA EDIT: return d3.ascending(xRte, yRte);
+                        return d3.descending(xRte, yRte);
                     }
                 );
                 reorderIcons();

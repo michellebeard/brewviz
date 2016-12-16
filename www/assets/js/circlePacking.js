@@ -464,11 +464,17 @@ function buildBeer(res) {
         typeof res.hits[0]._source.breweries[0].locations[0].region !== 'undefined') {
         location = res.hits[0]._source.breweries[0].locations[0].region;
     }
-    if (typeof res.hits[0]._source.breweries[0].locations[0].country.displayName !== 'undefined') {
+
+    if (typeof res.hits[0]._source.breweries !== 'undefined' &&
+        typeof res.hits[0]._source.breweries[0].locations !== 'undefined' &&
+        typeof res.hits[0]._source.breweries[0].locations[0].country !== 'undefined' &&
+        typeof res.hits[0]._source.breweries[0].locations[0].country.displayName !== 'undefined') {
         location = location + " " + res.hits[0]._source.breweries[0].locations[0].country.displayName
     }
 
-    if (typeof res.hits[0]._source.breweries[0].locations[0].locality !== 'undefined') {
+    if (typeof res.hits[0]._source.breweries !== 'undefined' &&
+        typeof res.hits[0]._source.breweries[0].locations !== 'undefined' &&
+        typeof res.hits[0]._source.breweries[0].locations[0].locality !== 'undefined') {
         location = res.hits[0]._source.breweries[0].locations[0].locality + ", " + location;
     }
 
@@ -494,7 +500,8 @@ function buildBeer(res) {
 
     // Hops
     var hops = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.hops !== 'undefined') {
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+        typeof res.hits[0]._source.ingredients.hops !== 'undefined') {
         hops = []
         var hopsArray = res.hits[0]._source.ingredients.hops;
         $.each(hopsArray, function(index, value) {
@@ -505,7 +512,8 @@ function buildBeer(res) {
 
     // Yeast 
     var yeast = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.yeast !== 'undefined') {
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+        typeof res.hits[0]._source.ingredients.yeast !== 'undefined') {
         yeast = []
         var yeastArray = res.hits[0]._source.ingredients.yeast;
         $.each(yeastArray, function(index, value) {
@@ -516,7 +524,8 @@ function buildBeer(res) {
 
     // Malt
     var malt = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.malt !== 'undefined') {
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' && 
+        typeof res.hits[0]._source.ingredients.malt !== 'undefined') {
         malt = []
         var maltArray = res.hits[0]._source.ingredients.malt;
         $.each(maltArray, function(index, value) {
@@ -527,7 +536,8 @@ function buildBeer(res) {
 
     // Misc
     var misc = "Unknown";
-    if (typeof res.hits[0]._source.ingredients !== 'undefined' && typeof res.hits[0]._source.ingredients.misc !== 'undefined') {
+    if (typeof res.hits[0]._source.ingredients !== 'undefined' 
+        && typeof res.hits[0]._source.ingredients.misc !== 'undefined') {
         misc = []
         var miscArray = res.hits[0]._source.ingredients.misc;
         $.each(miscArray, function(index, value) {

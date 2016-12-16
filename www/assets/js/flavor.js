@@ -47,7 +47,6 @@ define(['assets/third_party/elasticsearch-js/elasticsearch'], function(elasticse
         }
     }).then(function(resp) {
         var data = createChildNodes(resp);
-        console.log(data);
         var num_beers = data.beer.length;
         var font_size = 16;
 
